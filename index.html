@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>💖 Pour Ketsia 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(135deg, #0b0b2a, #1a0b2e, #2a0b3d);
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .container {
+        text-align: center;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    #yes {
+        background: #ff4da6;
+        color: white;
+    }
+
+    #no {
+        background: #444;
+        color: white;
+        position: absolute;
+    }
+
+    #cinematic {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.92);
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px;
+    }
+
+    #text {
+        max-width: 700px;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        white-space: pre-line;
+    }
+
+    .heart {
+        position: absolute;
+        color: pink;
+        animation: float 4s linear infinite;
+    }
+
+    @keyframes float {
+        from { transform: translateY(100vh); opacity: 1; }
+        to { transform: translateY(-10vh); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>💖 Veux-tu sortir avec moi Ketsia ? 💖</h1>
+
+    <div class="buttons">
+        <button id="yes">Oui 💖</button>
+        <button id="no">Non</button>
+    </div>
+</div>
+
+<div id="cinematic">
+    <div id="text"></div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const cinematic = document.getElementById("cinematic");
+const text = document.getElementById("text");
+
+const messages = [
+    "🥺 Tu vas vraiment dire non ?",
+    "😭 Réfléchis encore une fois...",
+    "❤️ Je suis sûr que tu voulais cliquer sur Oui 😌",
+    "🕷️ Même Miles dirait Oui !",
+    "💕 Allez... une dernière chance ?"
+];
+
+// bouton NON qui fuit + messages
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    noBtn.innerText = messages[Math.floor(Math.random() * messages.length)];
+});
+
+let i = 0;
+let started = false;
+
+const story = `Ketsia...
+
+Il paraît qu'il existe une infinité d'univers. Dans certains, nous ne nous sommes jamais rencontrés.
+
+Mais s'il existe un univers où j'ai la chance de te connaître, alors c'est celui que je choisis.
+
+Tu rends mes journées plus douces, même sans le savoir.
+
+Je ne sais pas ce que l'avenir nous réserve, mais je sais ce que je ressens aujourd'hui.
+
+Je t'aime, Ketsia.
+
+Et si le destin nous éloigne, je traverserai chaque univers pour te retrouver.`;
+
+function typeWriter() {
+    if (i < story.length) {
+        text.innerHTML += story.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+// clic OUI
+yesBtn.addEventListener("click", () => {
+    if (started) return;
+    started = true;
+
+    cinematic.style.display = "flex";
+    text.innerHTML = "";
+    i = 0;
+
+    startHearts();
+    typeWriter();
+});
+
+// cœurs animés
+function startHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+    }, 200);
+}
+</script>
+
+</body>
+</html>
